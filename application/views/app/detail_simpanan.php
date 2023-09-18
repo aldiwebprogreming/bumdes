@@ -4,11 +4,7 @@
     <div class="container-fluid">
       <div class="card">
         <div class="card-header">
-          <?php 
-          foreach ($simpanan as $nama) {
 
-          }
-          ?>
           <h3 class="card-title">Data Simpanan <?= $nama['nama'] ?> </h3>
         </div>
         <!-- /.card-header -->
@@ -34,7 +30,7 @@
                     <div class="form-group">
                       <label>Nama</label>
                       <select class="form-control" name="nama" required>
-                        <option value="<?= $nama['id_anggota'] ?>"><?= $nama['nama'] ?></option>
+                        <option value="<?= $nama['id'] ?>"><?= $nama['nama'] ?></option>
 
                       </select>
                     </div>

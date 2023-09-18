@@ -276,6 +276,7 @@
 			}
 
 			function pengajuan_simpanan2(){
+
 				$data['kode'] = 'kode-'.rand(0, 10000);
 				$data['anggota'] = $this->db->get('tbl_anggota_simpanpinjam')->result_array();
 				$data['ajuan'] = $this->db->get('tbl_pengajuan_simpanan')->result_array();
@@ -410,6 +411,7 @@
 				$id_anggota = $this->input->get('id');
 				$data['simpanan'] = $this->db->get_where('tbl_simpanan', ['id_anggota' => $id_anggota])->result_array();
 				$data['kode'] = 'kode-'.rand(0, 10000);
+				$data['nama'] = $this->db->get_where('tbl_anggota_simpanpinjam', ['id' => $id_anggota])->row_array();
 				$this->load->view('template/header');
 				$this->load->view('app/detail_simpanan', $data); 
 				$this->load->view('template/footer');
@@ -503,6 +505,7 @@
 					'tgl_berakhir' => $tgl_berakhir,
 					'bunga' => $this->input->post('bunga'),
 					'total_pembayaran' => $total_pembayaran,
+					'sisa_pembayaran' => $total_pembayaran,
 				];
 
 				$this->db->insert('tbl_pengajuan_pinjaman', $data);
@@ -536,11 +539,11 @@
 
 				$id_anggota = $this->input->post('id_anggota');
 				$pinjaman = $this->db->get_where('tbl_pengajuan_pinjaman', ['id_anggota' => $id_anggota])->row_array();
-				$sisa = $pinjaman['total_pembayaran'] - $this->input->post('jml_pembayaran');
+				$sisa = $pinjaman['sisa_pembayaran'] - $this->input->post('jml_pembayaran');
 
 
 				$this->db->where('id_anggota',$id_anggota);
-				$updatetotalbayar = $this->db->update('tbl_pengajuan_pinjaman', ['total_pembayaran' => $sisa]);
+				$updatetotalbayar = $this->db->update('tbl_pengajuan_pinjaman', ['sisa_pembayaran' => $sisa]);
 
 				$data = [
 					'kode' => $this->input->post('kode'),
@@ -550,6 +553,12 @@
 					'jml_pembayaran' => $this->input->post('jml_pembayaran'),
 					'sisa_pembayaran' => $sisa,
 				];
+
+				if($sisa == 0){
+
+					$this->db->where('id_anggota', $id_anggota);
+					$this->db->update('tbl_pengajuan_pinjaman', ['status_pinjaman' => 'Lunas']);
+				}
 
 				$this->db->insert('tbl_pembayaran', $data);
 				$this->session->set_flashdata('message', 'swal("Yess", "Data berhasil di tambah", "success");');
@@ -561,6 +570,7 @@
 				$data['kode'] = 'kode-'.rand(0, 10000);
 
 				$data['pembayaran'] = $this->db->get_where('tbl_pembayaran', ['id_anggota' => $id])->result_array();
+				$data['nama'] = $this->db->get_where('tbl_anggota_simpanpinjam', ['id' => $id])->row_array();
 				$this->load->view('template/header');
 				$this->load->view('app/detail_pembayaran', $data);
 				$this->load->view('template/footer');
@@ -571,11 +581,11 @@
 
 				$id_anggota = $this->input->post('id_anggota');
 				$pinjaman = $this->db->get_where('tbl_pengajuan_pinjaman', ['id_anggota' => $id_anggota])->row_array();
-				$sisa = $pinjaman['total_pembayaran'] - $this->input->post('jml_pembayaran');
+				$sisa = $pinjaman['sisa_pembayaran'] - $this->input->post('jml_pembayaran');
 
 
 				$this->db->where('id_anggota',$id_anggota);
-				$updatetotalbayar = $this->db->update('tbl_pengajuan_pinjaman', ['total_pembayaran' => $sisa]);
+				$updatetotalbayar = $this->db->update('tbl_pengajuan_pinjaman', ['sisa_pembayaran' => $sisa]);
 
 				$data = [
 					'kode' => $this->input->post('kode'),
@@ -672,7 +682,7 @@
 					$error = array('error' => $this->upload->display_errors());
 					$this->session->set_flashdata('message', 'swal("Oops", "Ada kesalahan dalam upload gambar", "warning" );');
 					redirect('app/produk');
-					
+
 				}else{
 					$img = array('upload_data' => $this->upload->data());
 					$new_name = $img['upload_data']['file_name'];
@@ -691,7 +701,7 @@
 					redirect("app/produk");	
 
 				}
-				
+
 			}
 
 			function hapus_produk(){

@@ -4,13 +4,9 @@
     <div class="container-fluid">
       <div class="card">
         <div class="card-header">
-          <?php foreach ($pembayaran as  $nama) {
 
-          } ?>
-          <?php 
-          $nama2 = $this->db->get('tbl_anggota_simpanpinjam', ['id' => $nama['id_anggota']])->row_array();
-          ?>
-          <h3 class="card-title">Data Pembayaran <?= $nama2['nama'] ?></h3>
+
+          <h3 class="card-title">Data Pembayaran <?= $nama['nama'] ?></h3>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
@@ -37,7 +33,7 @@
                   <div class="form-group">
                     <label>Nama Anggota</label>
                     <select class="form-control" name="id_anggota">
-                      <option value="<?= $nama2['id'] ?>"><?= $nama2['nama'] ?></option>
+                      <option value="<?= $nama['id'] ?>"><?= $nama['nama'] ?></option>
 
                     </select>
                   </div>
@@ -94,17 +90,27 @@
 
                   </td>
                   <td><?= $data['jml_pembayaran'] ?></td>
-                  <td><?= $data['sisa_pembayaran'] ?></td>
-                  <td><?= $data['tgl'] ?></td>
+                  <td>
+                    <?php 
+                    if ($data['sisa_pembayaran'] == 0) {
+                      echo "lunas";
+                    }else{
 
-                <?php } ?>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+                     echo $data['sisa_pembayaran'];
+                   }
 
-    </div>
-  </div>
+                   ?>
+                 </td>
+                 <td><?= $data['tgl'] ?></td>
+
+               <?php } ?>
+             </tr>
+           </tbody>
+         </table>
+       </div>
+     </div>
+
+   </div>
+ </div>
 </div>
 </div>
