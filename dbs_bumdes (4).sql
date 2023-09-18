@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 15, 2023 at 11:40 AM
+-- Generation Time: Sep 18, 2023 at 11:15 AM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.11
 
@@ -65,7 +65,8 @@ CREATE TABLE `tbl_anggota_simpanpinjam` (
 
 INSERT INTO `tbl_anggota_simpanpinjam` (`id`, `kode`, `nama`, `jk`, `tempat_lahir`, `tgl_lahir`, `alamat`, `no_ktp`, `no_hp`, `status_anggota`, `date`) VALUES
 (2, 'kode-128', 'Aldi', 'Laki - Laki', 'Medan', '2023-09-15', 'Medan', '234567890984', '5690344242344', '', '2023-09-13 14:29:08'),
-(3, 'kode-52', 'Davin', 'Laki - Laki', 'Medan', '2023-09-14', 'Medan', '1205092102860001', '083138184143', '', '2023-09-14 06:53:52');
+(3, 'kode-52', 'Davin', 'Laki - Laki', 'Medan', '2023-09-14', 'Medan', '1205092102860001', '083138184143', '', '2023-09-14 06:53:52'),
+(4, 'kode-8917', 'Aldisaja', 'Laki - Laki', 'Medan', '2023-09-18', '3434343434343', '1205092102860001', '083138184143', '', '2023-09-18 02:22:04');
 
 -- --------------------------------------------------------
 
@@ -85,7 +86,7 @@ CREATE TABLE `tbl_jabatan` (
 --
 
 INSERT INTO `tbl_jabatan` (`id`, `kode`, `jabatan`, `date`) VALUES
-(2, 'jbt-914', 'Kades', '2023-09-11 07:51:48'),
+(2, 'jbt-914', 'Kades', '2023-09-16 06:07:29'),
 (3, 'jbt-1000', 'Sekretaris', '2023-09-13 13:56:59');
 
 -- --------------------------------------------------------
@@ -131,10 +132,8 @@ CREATE TABLE `tbl_pembayaran` (
 --
 
 INSERT INTO `tbl_pembayaran` (`id`, `kode`, `id_anggota`, `jml_pembayaran`, `sisa_pembayaran`, `tgl`, `date`) VALUES
-(5, 'kode-6930', '2', '30000', '480000', '2023-09-15', '2023-09-15 07:15:37'),
-(6, 'kode-2378', '2', '80000', '400000', '2023-09-15', '2023-09-15 07:16:03'),
-(7, 'kode-3959', '2', '300000', '100000', '2023-09-15', '2023-09-15 07:31:02'),
-(8, 'kode-9083', '2', '100000', '0', '2023-09-15', '2023-09-15 07:36:14');
+(16, 'kode-8820', '2', '415000', '100000', '2023-09-18', '2023-09-18 08:24:20'),
+(17, 'kode-8379', '2', '100000', '0', '2023-09-18', '2023-09-18 08:24:30');
 
 -- --------------------------------------------------------
 
@@ -162,7 +161,9 @@ INSERT INTO `tbl_pendapatan` (`id`, `nama_pendapatan`, `keterangan`, `jml`, `tgl
 (4, 'pendapatan bunga simpan pinjam', 'pendapatan bunga simpan pinjam', '0', '', '2023-09-15 07:59:26'),
 (5, 'pendapatan bunga simpan pinjam', 'pendapatan bunga simpan pinjam', '0', '2023-09-15', '2023-09-15 08:01:07'),
 (6, 'pendapatan bunga simpan pinjam', 'pendapatan bunga simpan pinjam', '10000', '2023-09-15', '2023-09-15 08:02:55'),
-(7, 'pendapatan bunga simpan pinjam', 'pendapatan bunga simpan pinjam', '10000', '2023-09-15', '2023-09-15 08:03:51');
+(7, 'pendapatan bunga simpan pinjam', 'pendapatan bunga simpan pinjam', '10000', '2023-09-15', '2023-09-15 08:03:51'),
+(8, 'penarikan simpanan', 'penarikan simpanan', '5100', '2023-09-18', '2023-09-18 04:40:47'),
+(9, 'penarikan simpanan', 'penarikan simpanan', '5100', '2023-09-18', '2023-09-18 04:51:04');
 
 -- --------------------------------------------------------
 
@@ -179,8 +180,10 @@ CREATE TABLE `tbl_pengajuan_pinjaman` (
   `tgl_berakhir` varchar(15) NOT NULL,
   `bunga` varchar(11) NOT NULL,
   `total_pembayaran` varchar(20) NOT NULL,
+  `sisa_pembayaran` varchar(30) NOT NULL,
   `status` int(11) NOT NULL,
   `status_hasil` int(11) NOT NULL,
+  `status_pinjaman` varchar(20) NOT NULL,
   `date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -188,9 +191,8 @@ CREATE TABLE `tbl_pengajuan_pinjaman` (
 -- Dumping data for table `tbl_pengajuan_pinjaman`
 --
 
-INSERT INTO `tbl_pengajuan_pinjaman` (`id`, `id_anggota`, `jml_pinjaman`, `waktu_pinjaman`, `tgl_mulai`, `tgl_berakhir`, `bunga`, `total_pembayaran`, `status`, `status_hasil`, `date`) VALUES
-(14, '2', '500000', '1', '2023-09-15', '2023-10-15', '2', '0', 1, 1, '2023-09-15 08:03:51'),
-(15, '3', '500000', '2', '2023-09-15', '2023-11-15', '3', '515000', 1, 0, '2023-09-15 02:16:10');
+INSERT INTO `tbl_pengajuan_pinjaman` (`id`, `id_anggota`, `jml_pinjaman`, `waktu_pinjaman`, `tgl_mulai`, `tgl_berakhir`, `bunga`, `total_pembayaran`, `sisa_pembayaran`, `status`, `status_hasil`, `status_pinjaman`, `date`) VALUES
+(20, '2', '500000', '2', '2023-09-18', '2023-11-18', '3', '515000', '0', 1, 0, '', '2023-09-18 08:24:30');
 
 -- --------------------------------------------------------
 
@@ -211,8 +213,7 @@ CREATE TABLE `tbl_pengajuan_simpanan` (
 --
 
 INSERT INTO `tbl_pengajuan_simpanan` (`id`, `kode`, `id_anggota`, `status`, `date`) VALUES
-(2, 'kode-8031', 2, 1, '2023-09-14 08:53:56'),
-(8, 'kode-5005', 3, 1, '2023-09-14 09:39:20');
+(17, 'kode-3715', 2, 1, '2023-09-18 07:06:30');
 
 -- --------------------------------------------------------
 
@@ -236,7 +237,9 @@ CREATE TABLE `tbl_produk` (
 --
 
 INSERT INTO `tbl_produk` (`id`, `kode`, `nama_produk`, `keterangan`, `harga`, `stok`, `gambar`, `date`) VALUES
-(2, 'kode-2763', 'Lainya 3', 'ewew', '2242', '22', '567e6263a6fbb712a07333b47c9e320a.png', '2023-09-15 09:36:09');
+(3, 'kode-5902', 'Keripik Pisang', 'Some quick example text to build on the card title and make up the bulk of the card\'s content.', '10000', '10', '5e75f29d3e91ac81b41b84598cbf68a5.jpg', '2023-09-18 09:05:42'),
+(4, 'kode-4913', 'Basreng Bakso', 'Some quick example text to build on the card title and make up the bulk of the card\'s content.', '12000', '33', '1a28466c24c3ea22fd804709168bfeb4.jpg', '2023-09-18 09:06:02'),
+(5, 'kode-9003', 'Ikan Teri Nasi', 'Some quick example text to build on the card title and make up the bulk of the card\'s content.', '7000', '35', '02f33ad80b9fb1715313fac2f879c7c5.jpg', '2023-09-18 09:06:26');
 
 -- --------------------------------------------------------
 
@@ -254,18 +257,6 @@ CREATE TABLE `tbl_simpanan` (
   `status` int(11) NOT NULL,
   `date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `tbl_simpanan`
---
-
-INSERT INTO `tbl_simpanan` (`id`, `kode`, `id_anggota`, `nama`, `tgl`, `simpanan`, `status`, `date`) VALUES
-(2, 'kode-6405', 2, 'Aldi', '2023-09-14', '20000', 0, '2023-09-14 06:48:59'),
-(4, 'kode-5449', 2, 'Aldi', '2023-09-14', '50000', 0, '2023-09-14 07:27:20'),
-(5, 'kode-8773', 2, 'Aldi', '2023-09-14', '100000', 0, '2023-09-14 07:37:11'),
-(6, 'kode-8752', 3, 'Davin', '2023-09-14', '500000', 0, '2023-09-14 08:18:34'),
-(7, 'kode-2558', 3, 'Davin', '2023-09-14', '300000', 0, '2023-09-14 08:33:16'),
-(8, 'kode-7250', 3, 'Davin', '2023-09-15', '100000', 0, '2023-09-14 08:34:58');
 
 -- --------------------------------------------------------
 
@@ -396,7 +387,7 @@ ALTER TABLE `tbl_anggota_bumdes`
 -- AUTO_INCREMENT for table `tbl_anggota_simpanpinjam`
 --
 ALTER TABLE `tbl_anggota_simpanpinjam`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tbl_jabatan`
@@ -414,37 +405,37 @@ ALTER TABLE `tbl_level`
 -- AUTO_INCREMENT for table `tbl_pembayaran`
 --
 ALTER TABLE `tbl_pembayaran`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `tbl_pendapatan`
 --
 ALTER TABLE `tbl_pendapatan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `tbl_pengajuan_pinjaman`
 --
 ALTER TABLE `tbl_pengajuan_pinjaman`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `tbl_pengajuan_simpanan`
 --
 ALTER TABLE `tbl_pengajuan_simpanan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `tbl_produk`
 --
 ALTER TABLE `tbl_produk`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tbl_simpanan`
 --
 ALTER TABLE `tbl_simpanan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `tbl_unit`
