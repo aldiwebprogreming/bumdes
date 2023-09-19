@@ -65,6 +65,17 @@
                       </select>
                     </div>
 
+                    <div class="form-group">
+                      <label>Username</label>
+                      <input type="text"  name="username" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                      <label>Password</label>
+                      <input type="password"  name="password" class="form-control" required>
+                    </div>
+
+
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -87,6 +98,7 @@
                 <th>Email</th>
                 <th>Nohp</th>
                 <th>Jabatan</th>
+                <th>Username</th>
                 <th>Opsi</th>
               </tr>
             </thead>
@@ -105,6 +117,7 @@
                   <td><?= $data['email'] ?></td>
                   <td><?= $data['nohp'] ?></td>
                   <td><?= $data['jabatan'] ?></td>
+                  <td><?= $data['username'] ?></td>
                   <td>
                     <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalhapus<?= $data['id'] ?>">Hapus</button>
 
@@ -192,6 +205,16 @@
                                 <option><?= $data2['jabatan'] ?></option>
                               <?php } ?>
                             </select>
+                          </div>
+
+                          <div class="form-group">
+                            <label>Username</label>
+                            <input type="text" value="<?= $data['username'] ?>" name="username" class="form-control" required>
+                          </div>
+
+                          <div class="form-group">
+                            <label>Password Baru</label>
+                            <input type="password"  name="password"  class="form-control" required>
                           </div>
 
                         </div>

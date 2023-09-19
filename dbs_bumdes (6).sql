@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 18, 2023 at 11:15 AM
+-- Generation Time: Sep 19, 2023 at 11:40 AM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.11
 
@@ -71,6 +71,18 @@ INSERT INTO `tbl_anggota_simpanpinjam` (`id`, `kode`, `nama`, `jk`, `tempat_lahi
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tbl_hak_akses`
+--
+
+CREATE TABLE `tbl_hak_akses` (
+  `id` int(2) NOT NULL,
+  `level` varchar(30) NOT NULL,
+  `id_menu` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tbl_jabatan`
 --
 
@@ -78,6 +90,7 @@ CREATE TABLE `tbl_jabatan` (
   `id` int(11) NOT NULL,
   `kode` varchar(15) NOT NULL,
   `jabatan` varchar(50) NOT NULL,
+  `level` varchar(50) NOT NULL,
   `date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -85,9 +98,8 @@ CREATE TABLE `tbl_jabatan` (
 -- Dumping data for table `tbl_jabatan`
 --
 
-INSERT INTO `tbl_jabatan` (`id`, `kode`, `jabatan`, `date`) VALUES
-(2, 'jbt-914', 'Kades', '2023-09-16 06:07:29'),
-(3, 'jbt-1000', 'Sekretaris', '2023-09-13 13:56:59');
+INSERT INTO `tbl_jabatan` (`id`, `kode`, `jabatan`, `level`, `date`) VALUES
+(4, 'jbt-321', 'Kades', 'Supere Admin', '2023-09-19 07:44:04');
 
 -- --------------------------------------------------------
 
@@ -102,14 +114,43 @@ CREATE TABLE `tbl_level` (
   `date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `tbl_level`
+-- Table structure for table `tbl_menu`
 --
 
-INSERT INTO `tbl_level` (`id`, `kode`, `level`, `date`) VALUES
-(1, 'user-96', 'Admin', '2023-09-11 08:52:44'),
-(5, 'user-695', 'Supere Admin', '2023-09-11 08:53:47'),
-(6, 'user-136', 'Pengguna', '2023-09-11 08:54:12');
+CREATE TABLE `tbl_menu` (
+  `id` int(11) NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `url` varchar(30) NOT NULL,
+  `icon` varchar(30) NOT NULL,
+  `status` int(11) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_menu`
+--
+
+INSERT INTO `tbl_menu` (`id`, `title`, `url`, `icon`, `status`, `date`) VALUES
+(16, 'Dashbord', 'index', 'nav-icon fas fa-tachometer-alt', 0, '2023-09-19 08:14:39'),
+(17, 'Pendapatan', 'pendapatan', 'far fa-circle nav-icon', 0, '2023-09-19 08:16:05'),
+(18, 'Pengeluaran', 'pengeluaran', 'far fa-circle nav-icon', 0, '2023-09-19 08:16:29'),
+(19, 'Anggota Simpan Pinjam', 'anggota_simpanpinjam', 'far fa-circle nav-icon', 0, '2023-09-19 08:17:14'),
+(20, 'Pengajuan Simpanan', 'pengajuan_simpanan2', 'far fa-circle nav-icon', 0, '2023-09-19 08:17:43'),
+(21, 'Anggota Simpanan Aktif', 'pengajuan_simpanan', 'far fa-circle nav-icon', 0, '2023-09-19 08:18:31'),
+(22, 'Data Simpanan', 'simpanan', 'far fa-circle nav-icon', 0, '2023-09-19 08:18:52'),
+(23, 'Pengajuan Pinjaman', 'pengajuan_pinjaman', 'far fa-circle nav-icon', 0, '2023-09-19 08:19:34'),
+(24, 'Pembayaran', 'pembayaran', 'far fa-circle nav-icon', 0, '2023-09-19 08:20:09'),
+(25, 'Produk', 'produk', 'far fa-circle nav-icon', 0, '2023-09-19 08:21:13'),
+(26, 'Orderan', 'pembayaran_produk', 'far fa-circle nav-icon', 0, '2023-09-19 08:21:50'),
+(27, 'Unit', 'unit', 'far fa-circle nav-icon', 0, '2023-09-19 08:22:12'),
+(28, 'Jabatan', 'jabatan', 'far fa-circle nav-icon', 0, '2023-09-19 08:22:29'),
+(29, 'Pengguna', 'user', 'far fa-circle nav-icon', 0, '2023-09-19 08:22:50'),
+(30, 'Menu', 'menu', 'far fa-circle nav-icon', 0, '2023-09-19 08:23:03'),
+(31, 'Level', 'level', 'far fa-circle nav-icon', 0, '2023-09-19 08:23:15'),
+(32, 'Hak Akss', 'hak_akses', 'far fa-circle nav-icon', 0, '2023-09-19 08:23:34');
 
 -- --------------------------------------------------------
 
@@ -138,6 +179,42 @@ INSERT INTO `tbl_pembayaran` (`id`, `kode`, `id_anggota`, `jml_pembayaran`, `sis
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tbl_pembayaran_produk`
+--
+
+CREATE TABLE `tbl_pembayaran_produk` (
+  `id` int(11) NOT NULL,
+  `kode` varchar(15) NOT NULL,
+  `produk` varchar(50) NOT NULL,
+  `qty` int(11) NOT NULL,
+  `harga` varchar(15) NOT NULL,
+  `total_harga` varchar(15) NOT NULL,
+  `nama` varchar(30) NOT NULL,
+  `noktp` varchar(16) NOT NULL,
+  `norek` varchar(20) NOT NULL,
+  `total_pembayaran` varchar(30) NOT NULL,
+  `bukti` varchar(200) NOT NULL,
+  `alamat_pengantaran` text NOT NULL,
+  `status` varchar(30) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_pembayaran_produk`
+--
+
+INSERT INTO `tbl_pembayaran_produk` (`id`, `kode`, `produk`, `qty`, `harga`, `total_harga`, `nama`, `noktp`, `norek`, `total_pembayaran`, `bukti`, `alamat_pengantaran`, `status`, `date`) VALUES
+(2, 'kode-113', 'Keripik Pisang', 1, '10000', '10000', 'aldi', '3434343434343', '', '34000', '', '', 'setuju', '2023-09-19 04:17:31'),
+(3, 'kode-113', 'Basreng Bakso', 2, '12000', '24000', 'aldi', '3434343434343', '', '34000', '', '', 'setuju', '2023-09-19 04:17:31'),
+(4, 'kode-875', 'Keripik Pisang', 1, '10000', '10000', 'aldi', '3434343434343', '', '34000', '', '', 'menunggu', '2023-09-19 03:23:28'),
+(5, 'kode-875', 'Basreng Bakso', 2, '12000', '24000', 'aldi', '3434343434343', '', '34000', '', '', 'menunggu', '2023-09-19 03:23:28'),
+(6, 'kode-30', 'Keripik Pisang', 1, '10000', '10000', 'aldi', '3434343434343', '', '34000', '', '', 'menunggu', '2023-09-19 03:23:59'),
+(7, 'kode-30', 'Basreng Bakso', 2, '12000', '24000', 'aldi', '3434343434343', '', '34000', '', '', 'menunggu', '2023-09-19 03:23:59'),
+(8, 'kode-718', 'Keripik Pisang', 1, '10000', '10000', 'aldi', '3434343434343', '343434343434', '10000', '2e6e6b54e24b726d3adb66e6a23832e9.png', '34343434343', 'setuju', '2023-09-19 04:17:38');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tbl_pendapatan`
 --
 
@@ -155,15 +232,7 @@ CREATE TABLE `tbl_pendapatan` (
 --
 
 INSERT INTO `tbl_pendapatan` (`id`, `nama_pendapatan`, `keterangan`, `jml`, `tgl`, `date`) VALUES
-(1, 'penarikan simpanan', 'penarikan simpanan', '5100', '2023-09-14', '2023-09-14 08:08:07'),
-(2, 'penarikan simpanan', 'penarikan simpanan', '5100', '2023-09-14', '2023-09-14 08:13:42'),
-(3, 'penarikan simpanan', 'penarikan simpanan', '27000', '2023-09-14', '2023-09-14 08:35:33'),
-(4, 'pendapatan bunga simpan pinjam', 'pendapatan bunga simpan pinjam', '0', '', '2023-09-15 07:59:26'),
-(5, 'pendapatan bunga simpan pinjam', 'pendapatan bunga simpan pinjam', '0', '2023-09-15', '2023-09-15 08:01:07'),
-(6, 'pendapatan bunga simpan pinjam', 'pendapatan bunga simpan pinjam', '10000', '2023-09-15', '2023-09-15 08:02:55'),
-(7, 'pendapatan bunga simpan pinjam', 'pendapatan bunga simpan pinjam', '10000', '2023-09-15', '2023-09-15 08:03:51'),
-(8, 'penarikan simpanan', 'penarikan simpanan', '5100', '2023-09-18', '2023-09-18 04:40:47'),
-(9, 'penarikan simpanan', 'penarikan simpanan', '5100', '2023-09-18', '2023-09-18 04:51:04');
+(17, 'Lorem ipsum', 'Lorem ipsum', '30000', '2023-09-19', '2023-09-19 07:07:16');
 
 -- --------------------------------------------------------
 
@@ -218,6 +287,28 @@ INSERT INTO `tbl_pengajuan_simpanan` (`id`, `kode`, `id_anggota`, `status`, `dat
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tbl_pengeluaran`
+--
+
+CREATE TABLE `tbl_pengeluaran` (
+  `id` int(11) NOT NULL,
+  `nama_pengeluaran` varbinary(100) NOT NULL,
+  `keterangan` text NOT NULL,
+  `jml` int(11) NOT NULL,
+  `tgl` varchar(20) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_pengeluaran`
+--
+
+INSERT INTO `tbl_pengeluaran` (`id`, `nama_pengeluaran`, `keterangan`, `jml`, `tgl`, `date`) VALUES
+(8, 0x42656c69206b75727369, 'Beli kursi', 8000, '2023-09-19', '2023-09-19 07:28:38');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tbl_produk`
 --
 
@@ -261,6 +352,25 @@ CREATE TABLE `tbl_simpanan` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tbl_total_pendapatan`
+--
+
+CREATE TABLE `tbl_total_pendapatan` (
+  `id` int(11) NOT NULL,
+  `total` int(11) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_total_pendapatan`
+--
+
+INSERT INTO `tbl_total_pendapatan` (`id`, `total`, `date`) VALUES
+(2, 30000, '2023-09-19 07:28:38');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tbl_unit`
 --
 
@@ -277,7 +387,7 @@ CREATE TABLE `tbl_unit` (
 
 INSERT INTO `tbl_unit` (`id`, `kode`, `unit`, `date`) VALUES
 (2, 'unit-30', 'Unit Simpan Pinjam', '2023-09-11 08:12:44'),
-(3, 'unit-121', 'Unit Dagang  Gorengan', '2023-09-11 08:13:21');
+(3, 'unit-121', 'Toko Online', '2023-09-19 07:58:35');
 
 -- --------------------------------------------------------
 
@@ -294,8 +404,17 @@ CREATE TABLE `tbl_user` (
   `nohp` varchar(13) NOT NULL,
   `email` varchar(30) NOT NULL,
   `jabatan` varchar(20) NOT NULL,
+  `username` varchar(20) NOT NULL,
+  `password` varchar(200) NOT NULL,
   `date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tbl_user`
+--
+
+INSERT INTO `tbl_user` (`id`, `kode`, `nama`, `jk`, `tgl_lahir`, `nohp`, `email`, `jabatan`, `username`, `password`, `date`) VALUES
+(2, 'user-725', 'Aldi', 'Laki - laki', '2023-09-19', '083138184143', 'alldii1956@gmail.com', 'Kades', 'aldi', '$2y$10$PG3g6ujRDGnvETgvJps.nOP1QtyEo8c4mXTaDbAaOJEHrWa3k8TR2', '2023-09-19 07:48:43');
 
 --
 -- Indexes for dumped tables
@@ -314,6 +433,12 @@ ALTER TABLE `tbl_anggota_simpanpinjam`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tbl_hak_akses`
+--
+ALTER TABLE `tbl_hak_akses`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tbl_jabatan`
 --
 ALTER TABLE `tbl_jabatan`
@@ -326,9 +451,21 @@ ALTER TABLE `tbl_level`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tbl_menu`
+--
+ALTER TABLE `tbl_menu`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tbl_pembayaran`
 --
 ALTER TABLE `tbl_pembayaran`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_pembayaran_produk`
+--
+ALTER TABLE `tbl_pembayaran_produk`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -350,6 +487,12 @@ ALTER TABLE `tbl_pengajuan_simpanan`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tbl_pengeluaran`
+--
+ALTER TABLE `tbl_pengeluaran`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tbl_produk`
 --
 ALTER TABLE `tbl_produk`
@@ -359,6 +502,12 @@ ALTER TABLE `tbl_produk`
 -- Indexes for table `tbl_simpanan`
 --
 ALTER TABLE `tbl_simpanan`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tbl_total_pendapatan`
+--
+ALTER TABLE `tbl_total_pendapatan`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -390,16 +539,28 @@ ALTER TABLE `tbl_anggota_simpanpinjam`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `tbl_hak_akses`
+--
+ALTER TABLE `tbl_hak_akses`
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=156;
+
+--
 -- AUTO_INCREMENT for table `tbl_jabatan`
 --
 ALTER TABLE `tbl_jabatan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tbl_level`
 --
 ALTER TABLE `tbl_level`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `tbl_menu`
+--
+ALTER TABLE `tbl_menu`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `tbl_pembayaran`
@@ -408,10 +569,16 @@ ALTER TABLE `tbl_pembayaran`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
+-- AUTO_INCREMENT for table `tbl_pembayaran_produk`
+--
+ALTER TABLE `tbl_pembayaran_produk`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT for table `tbl_pendapatan`
 --
 ALTER TABLE `tbl_pendapatan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `tbl_pengajuan_pinjaman`
@@ -426,6 +593,12 @@ ALTER TABLE `tbl_pengajuan_simpanan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
+-- AUTO_INCREMENT for table `tbl_pengeluaran`
+--
+ALTER TABLE `tbl_pengeluaran`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT for table `tbl_produk`
 --
 ALTER TABLE `tbl_produk`
@@ -438,6 +611,12 @@ ALTER TABLE `tbl_simpanan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
+-- AUTO_INCREMENT for table `tbl_total_pendapatan`
+--
+ALTER TABLE `tbl_total_pendapatan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `tbl_unit`
 --
 ALTER TABLE `tbl_unit`
@@ -447,7 +626,7 @@ ALTER TABLE `tbl_unit`
 -- AUTO_INCREMENT for table `tbl_user`
 --
 ALTER TABLE `tbl_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

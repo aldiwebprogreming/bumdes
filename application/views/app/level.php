@@ -33,8 +33,17 @@
 
                     <div class="form-group">
                       <label>Hak Akses</label>
-
                     </div>
+
+                    <?php foreach ($menu as $mm) { ?>
+                      <div class="form-check">
+                        <input class="form-check-input" name="menu[]" value="<?= $mm['id'] ?>" type="checkbox" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                          <?= $mm['title'] ?>
+                        </label>
+                      </div>
+
+                    <?php } ?>
 
 
                   </div>
@@ -85,6 +94,7 @@
                           <div class="modal-body">
                             <form method="post" action="<?= base_url('app/hapus_level') ?>">
                              <input type="hidden" name="id" value="<?= $data['id'] ?>">
+                             <input type="hidden" name="level" value="<?= $data['level'] ?>">
                              <h4>Apakah anda ingin menghapus data ini ?</h4>
                            </div>
                            <div class="modal-footer">
@@ -120,6 +130,27 @@
                             <label>Level</label>
                             <input type="text"  name="level" value="<?= $data['level'] ?>" class="form-control" required>
                           </div>
+
+                          <div class="form-group">
+                            <label>Hak Akses</label>
+                          </div>
+
+                          <?php foreach ($menu as $mm) { ?>
+
+                            <?php 
+                            $this->db->where('level', $data['level']);
+                            $this->db->where('id_menu', $mm['id']);
+                            $cek = $this->db->get('tbl_hak_akses')->row_array();
+                            ?>
+                            <div class="form-check">
+                              <input class="form-check-input" name="menu[]" <?= $cek == true ? 'checked' : '' ?> value="<?= $mm['id'] ?>" type="checkbox" id="defaultCheck1">
+                              <label class="form-check-label" for="defaultCheck1">
+                                <?= $mm['title'] ?>
+                              </label>
+                            </div>
+
+                          <?php } ?>
+
 
                         </div>
                         <div class="modal-footer">

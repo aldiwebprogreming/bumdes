@@ -175,6 +175,98 @@
 	 		$this->load->view('template_user/footer');
 	 	}
 
+	 	function cart(){
+	 		$this->load->library('cart');
+
+	 		$data = [
+
+	 			'id' => $this->input->post('id'),
+	 			'qty' => $this->input->post('qty'),
+	 			'price' => $this->input->post('harga'),
+	 			'name' => $this->input->post('nama'),
+	 		];	
+
+	 		$cart = $this->cart->insert($data);
+	 		redirect('user/toko');
+	 	}
+
+
+	 	function remove_cart(){
+	 		$id = $this->input->get('id');
+	 		$this->cart->remove($id);
+	 		redirect('user/toko');
+	 	}
+
+	 	function checkout(){
+
+	 		$data['alert'] = $this->input->get('data');
+	 		$this->load->view('template_user/header');
+	 		$this->load->view('user/checkout', $data);
+	 		$this->load->view('template_user/footer');
+
+	 	}
+
+
+	 	function act_checkout(){
+
+	 		$config['upload_path']          = './assets/bukti';
+	 		$config['allowed_types']        = 'jpg|png|jpeg';
+	 		$config['min_size']             = 9000000;
+	 		$config['remove_spaces']        = false;
+	 		$config['encrypt_name'] 		= true;
+
+	 		$this->load->library('upload', $config);
+	 		if (!$this->upload->do_upload("gambar")){
+	 			$error = array('error' => $this->upload->display_errors());
+	 			$this->session->set_flashdata('message', 'swal("Oops", "Ada kesalahan dalam upload gambar", "warning" );');
+	 			redirect('user/checkout');
+
+	 		}else{
+	 			$img = array('upload_data' => $this->upload->data());
+	 			$new_name = $img['upload_data']['file_name'];
+
+
+	 			$kode = 'kode-'.rand(0, 1000);
+	 			foreach ($this->cart->contents() as $items) {
+
+	 				$data = [
+	 					'kode' => $kode,
+	 					'nama' => $this->input->post('nama'),
+	 					'noktp' => $this->input->post('noktp'),
+	 					'norek' => $this->input->post('norek'),
+	 					'nama' => $this->input->post('nama'),
+	 					'alamat_pengantaran' => $this->input->post('alamat'),
+	 					'total_pembayaran' => $this->input->post('total'),
+	 					'produk' => $items['name'],
+	 					'qty' => $items['qty'],
+	 					'total_harga' => $items['price'] * $items['qty'],
+	 					'harga' => $items['price'],
+	 					'status' => 'menunggu',
+	 					'bukti' => $new_name,
+
+	 				];
+
+	 				$this->db->insert('tbl_pembayaran_produk', $data);
+	 				$this->cart->remove($items['rowid']);
+	 			}
+
+
+	 			$this->session->set_flashdata('message', 'swal("Yess", "checkout anda berhasil", "success");');
+	 			redirect("user/checkout?data=sukses");
+
+	 		}
+	 	}
+
+	 	function data_pesanan(){
+
+	 		$data['produk'] = $this->db->get_where('tbl_pembayaran_produk', ['noktp' => $this->session->no_ktp])->result_array();
+
+	 		$this->load->view('template_user/header');
+	 		$this->load->view('user/data_pesanan', $data);
+	 		$this->load->view('template_user/footer');
+
+	 	}
+
 
 	 }
 	?>

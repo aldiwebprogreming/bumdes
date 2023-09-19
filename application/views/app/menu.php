@@ -4,11 +4,11 @@
     <div class="container-fluid">
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title">Data Jabatan</h3>
+          <h3 class="card-title">Data menu</h3>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
-          <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus"></i> Tamah jabatan</button>
+          <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus"></i> Tambah menu</button>
 
           <!-- Modal -->
           <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -21,27 +21,20 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <form method="post" action="<?= base_url('app/act_jabatan') ?>">
+                  <form method="post" action="<?= base_url('app/add_menu') ?>">
                     <div class="form-group">
-                      <label>Kode</label>
-                      <input type="text" readonly name="kode" value="<?= $kode ?>" class="form-control" required>
+                      <label>Title</label>
+                      <input type="text"   name="title" class="form-control" required>
                     </div>
                     <div class="form-group">
-                      <label>Jabatan</label>
-                      <input type="text"  name="jabatan" class="form-control" required>
+                      <label>Url</label>
+                      <input type="text"   name="url" class="form-control" required>
                     </div>
 
                     <div class="form-group">
-                      <label>Level</label>
-                      <select class="form-control" name="level">
-                        <option>-- Pilih Level -- </option>
-                        <?php foreach ($level as $lv) {
-                          echo "<option>".$lv['level']."</option>";
-                        } ?>
-                      </select>
+                      <label>Icon</label>
+                      <input type="text"   name="icon" class="form-control" required>
                     </div>
-
-
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -57,9 +50,9 @@
             <thead>
               <tr>
                 <th>No</th>
-                <th>Kode</th>
-                <th>Jabatan</th>
-                <th>Level</th>
+                <th>Title</th>
+                <th>Url</th>
+                <th>Icon</th>
                 <th>Opsi</th>
               </tr>
             </thead>
@@ -67,13 +60,13 @@
 
               <?php 
               $no = 1;
-              foreach ($jabatan as $data) {
+              foreach ($menu as $data) {
                 ?>
                 <tr>
                   <td><?= $no++ ?></td>
-                  <td><?= $data['kode'] ?></td>
-                  <td><?= $data['jabatan'] ?></td>
-                  <td><?= $data['level'] ?></td>
+                  <td><?= $data['title'] ?></td>
+                  <td><?= $data['url'] ?></td>
+                  <td><?= $data['icon'] ?></td>
                   <td>
                     <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalhapus<?= $data['id'] ?>">Hapus</button>
 
@@ -88,7 +81,7 @@
                             </button>
                           </div>
                           <div class="modal-body">
-                            <form method="post" action="<?= base_url('app/hapus_jabatan') ?>">
+                            <form method="post" action="<?= base_url('app/hapus_menu') ?>">
                              <input type="hidden" name="id" value="<?= $data['id'] ?>">
                              <h4>Apakah anda ingin menghapus data ini ?</h4>
                            </div>
@@ -115,27 +108,23 @@
                           </button>
                         </div>
                         <div class="modal-body">
-                          <form method="post" action="<?= base_url('app/edit_jabatan') ?>">
+                          <form method="post" action="<?= base_url('app/edit_menu') ?>">
                            <input type="hidden" name="id" value="<?= $data['id'] ?>">
+                           
                            <div class="form-group">
-                            <label>Kode</label>
-                            <input type="text" readonly name="kode" value="<?= $data['kode'] ?>" class="form-control" required>
+                            <label>Title</label> 
+                            <input type="text" name="title"  value="<?= $data['title'] ?>" class="form-control" required>
                           </div>
                           <div class="form-group">
-                            <label>Jabatan</label>
-                            <input type="text"  name="jabatan" value="<?= $data['jabatan'] ?>" class="form-control" required>
+                            <label>Url</label>
+                            <input type="text" value="<?= $data['url'] ?>"  name="url" class="form-control" required>
                           </div>
 
                           <div class="form-group">
-                            <label>Level</label>
-                            <select class="form-control" name="level" required>
-                              <option><?= $data['level'] ?></option>
-                              <option value="">-- Pilih Level -- </option>
-                              <?php foreach ($level as $lv) {
-                                echo "<option>".$lv['level']."</option>";
-                              } ?>
-                            </select>
+                            <label>Icon</label>
+                            <input type="text" value="<?= $data['icon'] ?>"  name="icon" class="form-control" required>
                           </div>
+
 
                         </div>
                         <div class="modal-footer">

@@ -71,32 +71,7 @@
         
 
         <!-- Notifications Dropdown Menu -->
-        <li class="nav-item dropdown">
-          <a class="nav-link" data-toggle="dropdown" href="#">
-            <i class="far fa-bell"></i>
-            <span class="badge badge-warning navbar-badge">15</span>
-          </a>
-          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-            <span class="dropdown-item dropdown-header">15 Notifications</span>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-              <i class="fas fa-envelope mr-2"></i> 4 new messages
-              <span class="float-right text-muted text-sm">3 mins</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-              <i class="fas fa-users mr-2"></i> 8 friend requests
-              <span class="float-right text-muted text-sm">12 hours</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
-              <i class="fas fa-file mr-2"></i> 3 new reports
-              <span class="float-right text-muted text-sm">2 days</span>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
-          </div>
-        </li>
+
         <li class="nav-item">
           <a class="nav-link" data-widget="fullscreen" href="#" role="button">
             <i class="fas fa-expand-arrows-alt"></i>
@@ -110,7 +85,7 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
-      <a href="index3.html" class="brand-link">
+      <a href="" class="brand-link">
         <img src="<?= base_url('assets/') ?>dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">BUMDES</span>
       </a>
@@ -127,25 +102,13 @@
           </div>
         </div>
 
-        <!-- SidebarSearch Form -->
-        <div class="form-inline">
-          <div class="input-group" data-widget="sidebar-search">
-            <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-            <div class="input-group-append">
-              <button class="btn btn-sidebar">
-                <i class="fas fa-search fa-fw"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-
         <!-- Sidebar Menu -->
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
            with font-awesome or any other icon font library -->
            <li class="nav-item menu-open">
-            <a href="#" class="nav-link active">
+            <a href="<?= base_url('app/index') ?>" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -154,203 +117,151 @@
             </a>
 
           </li>
+
+
           <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Widgets
-                <span class="right badge badge-danger">New</span>
-              </p>
-            </a>
-          </li>
-          <!-- <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-copy"></i>
+              <i class="nav-icon fas fa-tree"></i>
               <p>
-                BUMDES
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="nav-icon fas fa-edit"></i>
-                  <p>
-                    Simpan Pinjam
-                    <i class="fas fa-angle-left right"></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="pages/forms/general.html" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Simpan</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="pages/forms/advanced.html" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Pinjam</p>
-                    </a>
-                  </li>
-
-                </ul>
-              </li>
-
-              <li class="nav-item">
-                <a href="<?= base_url('app/user') ?>" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>UMK</p>
-                </a>
-              </li>
-
-
-            </ul> -->
-
-            
+               Keuangan
+               <i class="fas fa-angle-left right"></i>
+             </p>
+           </a>
+           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-tree"></i>
-                <p>
-                 Keuangan
-                 <i class="fas fa-angle-left right"></i>
-               </p>
-             </a>
-             <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="pages/UI/general.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Pendapatan</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/UI/icons.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Pengeluaran</p>
-                </a>
-              </li>
-              
-            </ul>
-          </li>
-
-
-
-
-
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-edit"></i>
-              <p>
-                Simpan Pinjam
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="pages/forms/general.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Anggota Simpan Pinjam</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="<?= base_url('app/pengajuan_simpanan2') ?>" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Pengajuan Simpanan</p>
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a href="<?= base_url('app/pengajuan_simpanan') ?>" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Anggota Simpanan Aktif</p>
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a href="<?= base_url('app/simpanan') ?>" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Data Simpanan</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="<?= base_url('app/pengajuan_pinjaman') ?>" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Pengajuan Pinjaman</p>
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a href="<?= base_url('app/pembayaran') ?>" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Pembayaran</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/forms/validation.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Validation</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-
-          <li class="nav-item">
-            <a href="<?= base_url('app/user') ?>" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>User</p>
-            </a>
-          </li>
-
-
-          <li class="nav-item">
-            <a href="<?= base_url('app/unit') ?>" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Unit</p>
-            </a>
-          </li>
-
-
-          <li class="nav-item">
-            <a href="<?= base_url('app/jabatan') ?>" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Jabatan</p>
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a href="<?= base_url('app/level') ?>" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <p>Level</p>
-            </a>
-          </li>
-
-
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-table"></i>
-              <p>
-                Tables
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="pages/tables/simple.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Simple Tables</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/tables/data.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>DataTables</p>
-                </a>
-              </li>
-
+              <a href="<?= base_url('app/pendapatan') ?>" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Pendapatan</p>
+              </a>
             </li>
+            <li class="nav-item">
+              <a href="<?= base_url('app/pengeluaran') ?>" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Pengeluaran</p>
+              </a>
+            </li>
+
           </ul>
         </li>
+
+
+
+
+
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-edit"></i>
+            <p>
+              Simpan Pinjam
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="<?= base_url('app/anggota_simpanpinjam') ?>" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Anggota Simpan Pinjam</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<?= base_url('app/pengajuan_simpanan2') ?>" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Pengajuan Simpanan</p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="<?= base_url('app/pengajuan_simpanan') ?>" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Anggota Simpanan Aktif</p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="<?= base_url('app/simpanan') ?>" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Data Simpanan</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<?= base_url('app/pengajuan_pinjaman') ?>" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Pengajuan Pinjaman</p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="<?= base_url('app/pembayaran') ?>" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Pembayaran</p>
+              </a>
+            </li>
+
+          </ul>
+        </li>
+
+
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-edit"></i>
+            <p>
+              Toko Online
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="<?= base_url('app/produk') ?>" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Produk</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<?= base_url('app/data_pembayaran_produk') ?>" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Orderan</p>
+              </a>
+            </li>
+
+
+            
+          </ul>
+        </li>
+
+
+
+
+        <li class="nav-item">
+          <a href="<?= base_url('app/unit') ?>" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Unit</p>
+          </a>
+        </li>
+
+
+        <li class="nav-item">
+          <a href="<?= base_url('app/jabatan') ?>" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Jabatan</p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="<?= base_url('app/user') ?>" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Pengguna</p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="<?= base_url('app/level') ?>" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Level</p>
+          </a>
+        </li>
+
+
+        
 
 
 

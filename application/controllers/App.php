@@ -22,6 +22,9 @@
 
 				$data['kode'] = 'jbt-'.rand(0,1000);
 				$data['jabatan'] = $this->db->get('tbl_jabatan')->result_array();
+				$data['level'] = $this->db->get('tbl_level')->result_array();
+
+
 
 				$this->load->view('template/header');
 				$this->load->view('app/jabatan', $data);
@@ -33,6 +36,7 @@
 				$data = [
 					'kode'=> $this->input->post('kode'),
 					'jabatan' => $this->input->post('jabatan'),
+					'level' => $this->input->post('level'),
 				];
 
 				$this->db->insert('tbl_jabatan', $data);
@@ -54,6 +58,7 @@
 				$data = [
 					'kode'=> $this->input->post('kode'),
 					'jabatan' => $this->input->post('jabatan'),
+					'level' => $this->input->post('level'),
 				];
 
 				$this->db->where('id', $this->input->post('id'));
@@ -127,6 +132,8 @@
 					'email' => $this->input->post('email'),
 					'nohp' => $this->input->post('nohp'),
 					'jabatan' => $this->input->post('jabatan'),
+					'username' => $this->input->post('username'),
+					'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
 				];
 
 				$this->db->insert('tbl_user', $data);
@@ -146,6 +153,8 @@
 					'email' => $this->input->post('email'),
 					'nohp' => $this->input->post('nohp'),
 					'jabatan' => $this->input->post('jabatan'),
+					'username' => $this->input->post('username'),
+					'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
 				];
 
 				$this->db->where('id', $this->input->post('id'));
@@ -166,6 +175,7 @@
 
 				$data['kode'] = 'user-'.rand(0, 1000);
 				$data['level'] = $this->db->get('tbl_level')->result_array();
+				$data['menu'] = $this->db->get('tbl_menu')->result_array();
 				
 				$this->load->view('template/header');
 				$this->load->view('app/level', $data);
@@ -181,16 +191,48 @@
 
 				];
 
+				$menu = $this->input->post('menu[]');
+				$a = count($menu);
+
+				for ($i=0; $i < $a ; $i++) { 
+					
+					$data2 = [
+						'level' => $this->input->post('level'),
+						'id_menu' => $menu[$i],
+					];
+
+					$this->db->insert('tbl_hak_akses', $data2);
+				}
+
+
 				$this->db->insert('tbl_level', $data);
+
 				$this->session->set_flashdata('message', 'swal("Yess", "Data berhasil ditambah", "success");');
 				redirect('app/level');
 			}
 
 			function edit_level(){
+
+
+				$this->db->where('level', $this->input->post('level'));
+				$this->db->delete('tbl_hak_akses');
+
+				$menu = $this->input->post('menu[]');
+				$a = count($menu);
+
+				for ($i=0; $i < $a ; $i++) { 
+					
+					$data2 = [
+						'level' => $this->input->post('level'),
+						'id_menu' => $menu[$i],
+					];
+
+					$this->db->insert('tbl_hak_akses', $data2);
+				}
+
 				$data = [
 					'kode'=> $this->input->post('kode'),
 					'level' => $this->input->post('level'),
-
 				];
 
 				$this->db->where('id', $this->input->post('id'));
@@ -202,6 +244,9 @@
 
 			function hapus_level(){
 
+				$this->db->where('level', $this->input->post('level'));
+				$this->db->delete('tbl_hak_akses');
+
 				$this->db->where('id', $this->input->post('id'));
 				$this->db->delete('tbl_level');
 				$this->session->set_flashdata('message', 'swal("Yess", "Data berhasil dihapus", "success");');
@@ -210,6 +255,7 @@
 
 
 			function anggota_simpanpinjam(){
+				
 				$data['kode'] = 'kode-'.rand(0, 1000);
 				$data['anggota'] = $this->db->get('tbl_anggota_simpanpinjam')->result_array();
 				$this->load->view('template/header');
@@ -400,6 +446,13 @@
 				$this->db->where('id_anggota', $id_anggota);
 				$this->db->update('tbl_pengajuan_simpanan', ['status' => 0]);
 
+
+				$pen = $this->db->get('tbl_total_pendapatan')->row_array();
+				$data = [
+
+					'total' => $pen['total'] + $jml,
+				];
+
 				$this->db->insert('tbl_pendapatan', $data);
 				$this->session->set_flashdata('message', 'swal("Yess", "Penarikan berhasil", "success");');
 				redirect('app/pengajuan_simpanan');
@@ -534,6 +587,244 @@
 
 			}
 
+			function pendapatan(){
+
+				$data['pendapatan'] = $this->db->get('tbl_pendapatan')->result_array();
+
+				$this->db->select_sum('jml');
+				$data['total'] = $this->db->get('tbl_pendapatan')->row_array();
+
+				$data['saldo'] = $this->db->get('tbl_total_pendapatan')->row_array();
+
+				$this->load->view('template/header');
+				$this->load->view('app/pendapatan', $data);
+				$this->load->view('template/footer');
+			}
+
+
+
+
+
+			function add_pendapatan(){
+
+
+				$data = [
+
+					'nama_pendapatan' => $this->input->post('nama_pendapatan'),
+					'keterangan' => $this->input->post('keterangan'),
+					'jml' => $this->input->post('jml'),
+					'tgl' => $this->input->post('tgl'),
+
+				];
+
+				$this->db->insert('tbl_pendapatan', $data);
+
+
+				$this->db->order_by('id', 'desc');
+				$pen = $this->db->get('tbl_total_pendapatan')->row_array();
+
+				if($pen == null){
+
+					$data = [
+						'total' =>  $this->input->post('jml'),
+					];
+					$this->db->insert('tbl_total_pendapatan', $data);
+				}else{
+					$data = [
+						'total' => $pen['total']  +  $this->input->post('jml'),
+					];
+
+					$this->db->update('tbl_total_pendapatan', $data);
+				}
+
+				$this->session->set_flashdata('message', 'swal("Yess", "Data berhasil di tambah", "success");');
+				redirect("app/pendapatan");
+			}
+
+
+
+			function edit_pendapatan(){
+
+				$pen = $this->db->get('tbl_total_pendapatan')->row_array();
+
+				$jml_sebelumnya = $this->input->post('jml2');
+				$jml_edit = $this->input->post('jml');
+
+				if ($jml_edit > $jml_sebelumnya) {
+					
+					$selisih = $jml_edit - $jml_sebelumnya;
+
+					$data = [
+						'total' => $pen['total'] + $selisih,
+					];
+
+					$this->db->update('tbl_total_pendapatan', $data);
+
+				}else if($jml_edit < $jml_sebelumnya){
+
+					$selisih = $jml_sebelumnya - $jml_edit;
+
+					$data = [
+						'total' => $pen['total'] - $selisih,
+					];	
+
+					$this->db->update('tbl_total_pendapatan', $data);
+				}else{
+
+
+				}
+
+				$data = [
+
+					'nama_pendapatan' => $this->input->post('nama_pendapatan'),
+					'keterangan' => $this->input->post('keterangan'),
+					'jml' => $this->input->post('jml'),
+					'tgl' => $this->input->post('tgl'),
+
+				];
+
+
+				$this->db->where('id', $this->input->post("id"));
+				$this->db->update('tbl_pendapatan', $data);
+				$this->session->set_flashdata('message', 'swal("Yess", "Data berhasil di ubah", "success");');
+				redirect("app/pendapatan");
+			}
+
+			function hapus_pendapatan(){
+
+
+				$this->db->where('id', $this->input->post("id"));
+				$this->db->delete('tbl_pendapatan');
+
+				$pen = $this->db->get('tbl_total_pendapatan')->row_array();
+
+				$data =  [
+					'total' =>$pen['total'] - $this->input->post('jml'),
+				];
+
+				$this->db->update('tbl_total_pendapatan', $data);
+
+				$this->session->set_flashdata('message', 'swal("Yess", "Data berhasil di hapus", "success");');
+				redirect("app/pendapatan");
+			}
+
+
+			function pengeluaran(){
+
+				$data['saldo'] = $this->db->get('tbl_total_pendapatan')->row_array();
+				$data['pengeluaran'] = $this->db->get('tbl_pengeluaran')->result_array();
+				$this->db->select_sum('jml');
+				
+				$data['total'] = $this->db->get('tbl_pengeluaran')->row_array();
+
+				$this->load->view('template/header');
+				$this->load->view('app/pengeluaran', $data);
+				$this->load->view('template/footer');
+			}
+
+			function add_pengeluaran(){
+
+
+
+				$pen = $this->db->get('tbl_total_pendapatan')->row_array();
+				if($pen['total'] <  $this->input->post('jml')){
+					$this->session->set_flashdata('message', 'swal("Oops", "Saldo anda tidak cukup", "error");');
+					redirect("app/pengeluaran");
+				}else{
+					$data2 =  [
+						'total' =>$pen['total'] - $this->input->post('jml'),
+					];
+
+					$this->db->update('tbl_total_pendapatan', $data2);
+
+
+					$data = [
+
+						'nama_pengeluaran' => $this->input->post('nama_pengeluaran'),
+						'keterangan' => $this->input->post('keterangan'),
+						'jml' => $this->input->post('jml'),
+						'tgl' => $this->input->post('tgl'),
+
+					];
+					$this->db->insert('tbl_pengeluaran', $data);
+					$this->session->set_flashdata('message', 'swal("Yess", "Data berhasil di tambah", "success");');
+					redirect('app/pengeluaran');	
+				}
+				
+			}
+
+			function hapus_pengeluaran(){
+
+
+				$this->db->where('id', $this->input->post("id"));
+				$this->db->delete('tbl_pengeluaran');
+
+				$pen = $this->db->get('tbl_total_pendapatan')->row_array();
+
+				$data =  [
+					'total' =>$pen['total'] + $this->input->post('jml'),
+				];
+
+				$this->db->update('tbl_total_pendapatan', $data);
+
+				$this->session->set_flashdata('message', 'swal("Yess", "Data berhasil di hapus", "success");');
+				redirect("app/pengeluaran");
+
+			}
+
+			function edit_pengeluaran(){
+
+				$pen = $this->db->get('tbl_total_pendapatan')->row_array();
+
+				if($pen['total'] <  $this->input->post('jml')){
+					$this->session->set_flashdata('message', 'swal("Oops", "Saldo anda tidak cukup", "error");');
+					redirect("app/pengeluaran");
+				}else{
+
+					$jml_sebelumnya = $this->input->post('jml2');
+					$jml_edit = $this->input->post('jml');
+
+					if ($jml_edit > $jml_sebelumnya) {
+
+						$selisih = $jml_edit - $jml_sebelumnya;
+
+						$data = [
+							'total' => $pen['total'] - $selisih,
+						];
+
+						$this->db->update('tbl_total_pendapatan', $data);
+
+					}else if($jml_edit < $jml_sebelumnya){
+
+						$selisih = $jml_sebelumnya + $jml_edit;
+
+						$data = [
+							'total' => $pen['total'] - $selisih,
+						];	
+
+						$this->db->update('tbl_total_pendapatan', $data);
+					}else{
+
+
+					}
+
+				}
+
+				$data = [
+
+					'nama_pengeluaran' => $this->input->post('nama_pengeluaran'),
+					'keterangan' => $this->input->post('keterangan'),
+					'jml' => $this->input->post('jml'),
+					'tgl' => $this->input->post('tgl'),
+
+				];
+
+
+				$this->db->where('id', $this->input->post("id"));
+				$this->db->update('tbl_pengeluaran', $data);
+				$this->session->set_flashdata('message', 'swal("Yess", "Data berhasil di ubah", "success");');
+				redirect("app/pengeluaran");
+			}
 
 			function add_pembayaran(){
 
@@ -619,6 +910,15 @@
 				];
 
 				$this->db->insert('tbl_pendapatan', $data);
+
+				$pen = $this->db->get('tbl_total_pendapatan')->row_array();
+				$data = [
+
+					'total' => $pen['total'] + $a,
+				];
+
+				$this->db->update('tbl_total_pendapatan', $data);
+
 				$this->session->set_flashdata('message', 'swal("Yess", "Pendapatan berhasil di tambah", "success");');
 				redirect("app/pengajuan_pinjaman");	
 			}
@@ -712,6 +1012,95 @@
 				$this->db->delete('tbl_produk');
 				$this->session->set_flashdata('message', 'swal("Yess", "Data berhasil di hapus", "success");');
 				redirect("app/produk");
+			}
+
+
+			function pembayaran_produk(){
+
+				$data['produk'] = $this->db->get('tbl_pembayaran_produk')->result_array();
+				$this->load->view('template/header');
+				$this->load->view('app/data_pembayaran_produk', $data);
+				$this->load->view('template/footer');
+
+			}
+
+			function setujui_pembayaran(){
+
+				$kode = $this->input->post('id');
+				$this->db->where('kode', $kode);
+				$this->db->update('tbl_pembayaran_produk', ['status' => 'setuju']); 
+
+				$get = $this->db->get_where('tbl_pembayaran_produk', ['kode' => $kode])->row_array();
+				$pendapatan = $get['total_pembayaran'];
+
+
+				$data = [
+
+					'nama_pendapatan' => 'pendapatan toko online',
+					'keterangan' => 'pendapatan toko online',
+					'jml' => $pendapatan,
+					'tgl' => date("Y-m-d"),
+
+				];
+
+				$this->db->insert('tbl_pendapatan', $data);
+
+				$pen = $this->db->get('tbl_total_pendapatan')->row_array();
+				$data = [
+
+					'total' => $pen['total'] + $pendapatan,
+				];
+
+				$this->session->set_flashdata('message', 'swal("Yess", "Data berhasil di setujui", "success");');
+				redirect("app/pembayaran_produk");
+			}
+
+
+			function menu(){
+
+				$data['menu'] = $this->db->get('tbl_menu')->result_array();
+				$this->load->view('template/header');
+				$this->load->view('app/menu', $data);
+				$this->load->view('template/footer');
+			}
+
+			function add_menu(){
+
+				$data = [
+					'title' => $this->input->post('title'),
+					'icon' => $this->input->post('icon'),
+					'url' => $this->input->post('url'),
+				];
+
+				$this->db->insert('tbl_menu', $data);
+				$this->session->set_flashdata('message', 'swal("Yess", "Data berhasil di tambah", "success");');
+				redirect("app/menu");
+			}
+
+
+			function edit_menu(){
+
+				$data = [
+					'title' => $this->input->post('title'),
+					'icon' => $this->input->post('icon'),
+					'url' => $this->input->post('url'),
+				];
+
+
+				$this->db->where('id', $this->input->post('id'));
+				$this->db->update('tbl_menu', $data);
+				$this->session->set_flashdata('message', 'swal("Yess", "Data berhasil di ubah", "success");');
+				redirect("app/menu");
+			}
+
+
+			function hapus_menu(){
+
+
+				$this->db->where('id', $this->input->post('id'));
+				$this->db->delete('tbl_menu');
+				$this->session->set_flashdata('message', 'swal("Yess", "Data berhasil di hapus", "success");');
+				redirect("app/menu");
 			}
 
 		}

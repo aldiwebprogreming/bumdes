@@ -6,18 +6,18 @@ if($alert){ ?>
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-lg-8 text-center">
-                   <!--    <h2 class="text-white mt-0">Apa Itu Bumde Desa Sungai Ular</h2> -->
-                   <!--   <hr class="divider divider-light" /> -->
+                 <!--    <h2 class="text-white mt-0">Apa Itu Bumde Desa Sungai Ular</h2> -->
+                 <!--   <hr class="divider divider-light" /> -->
 
-                   <img src="<?= base_url('assets_user/img/sukses.png') ?>" class="img-fluid" alt="..." style="height: 100px;">
-                   <p class="text-white-75 mb-4">
-                   Selamat anda berhasil login sebgai anggota BUMDES Desa Sungai Ular, Silahkan pilih apa kebutuhan anda </p>
-                   <a class="btn btn-light btn-xl mt-3" href="<?= base_url('user/simpanpinjam') ?>">Simpan Pinjam</a>
-                   <a class="btn btn-light btn-xl mt-3" href="<?= base_url('user/tokoonline') ?>">Toko Online</a>
-               </div>
-           </div>
-       </div>
-   </section>
+                 <img src="<?= base_url('assets_user/img/sukses.png') ?>" class="img-fluid" alt="..." style="height: 100px;">
+                 <p class="text-white-75 mb-4">
+                 Selamat anda berhasil login sebgai anggota BUMDES Desa Sungai Ular, Silahkan pilih apa kebutuhan anda </p>
+                 <a class="btn btn-light btn-xl mt-3" href="<?= base_url('user/simpanpinjam') ?>">Simpan Pinjam</a>
+                 <a class="btn btn-light btn-xl mt-3" href="<?= base_url('user/toko') ?>">Toko Online</a>
+             </div>
+         </div>
+     </div>
+ </section>
 <?php }else{ ?>
     <!-- Services-->
     <section class="page-section bg-primary" id="about">
