@@ -9,6 +9,10 @@
 			function __construct()
 			{
 				parent::__construct();
+				if($this->session->username == null){
+
+					redirect('login/');
+				}
 			}
 
 			function index(){
@@ -250,12 +254,12 @@
 				$this->db->where('id', $this->input->post('id'));
 				$this->db->delete('tbl_level');
 				$this->session->set_flashdata('message', 'swal("Yess", "Data berhasil dihapus", "success");');
-				redirect('app/level');	
+				redirect('app/level');         	
 			}
 
 
 			function anggota_simpanpinjam(){
-				
+
 				$data['kode'] = 'kode-'.rand(0, 1000);
 				$data['anggota'] = $this->db->get('tbl_anggota_simpanpinjam')->result_array();
 				$this->load->view('template/header');
@@ -414,7 +418,7 @@
 
 
 				$data = [
-					
+
 					'nama' => $nama['nama'],
 					'id_anggota' => $this->input->post('nama'),
 					'tgl' => $this->input->post('tgl'),
@@ -498,7 +502,7 @@
 
 
 				$data = [
-					
+
 					'nama' => $nama['nama'],
 					'id_anggota' => $this->input->post('nama'),
 					'tgl' => $this->input->post('tgl'),
@@ -651,7 +655,7 @@
 				$jml_edit = $this->input->post('jml');
 
 				if ($jml_edit > $jml_sebelumnya) {
-					
+
 					$selisih = $jml_edit - $jml_sebelumnya;
 
 					$data = [
@@ -714,7 +718,7 @@
 				$data['saldo'] = $this->db->get('tbl_total_pendapatan')->row_array();
 				$data['pengeluaran'] = $this->db->get('tbl_pengeluaran')->result_array();
 				$this->db->select_sum('jml');
-				
+
 				$data['total'] = $this->db->get('tbl_pengeluaran')->row_array();
 
 				$this->load->view('template/header');
@@ -750,7 +754,7 @@
 					$this->session->set_flashdata('message', 'swal("Yess", "Data berhasil di tambah", "success");');
 					redirect('app/pengeluaran');	
 				}
-				
+
 			}
 
 			function hapus_pengeluaran(){

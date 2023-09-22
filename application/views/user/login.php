@@ -26,7 +26,9 @@
                     </div>
 
 
-                    <button type="submit" class="btn btn-danger btn-block">Login Anggota</button>              
+                    <button type="submit" class="btn btn-danger w-100">Login Anggota</button> 
+
+                    <a href="<?= base_url('user/anggota') ?>" class="btn btn-danger w-100 mt-3">Daftar Anggota</a>             
 
                 </form>
             </div>

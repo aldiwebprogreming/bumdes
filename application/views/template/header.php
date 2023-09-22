@@ -98,7 +98,7 @@
             <img src="<?= base_url('assets/') ?>dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
-            <a href="#" class="d-block">Alexander Pierce</a>
+            <a href="#" class="d-block"><?= $this->session->username ?></a>
           </div>
         </div>
 
@@ -107,7 +107,7 @@
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
            with font-awesome or any other icon font library -->
-           <li class="nav-item menu-open">
+          <!--  <li class="nav-item menu-open">
             <a href="<?= base_url('app/index') ?>" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
@@ -116,158 +116,130 @@
               </p>
             </a>
 
-          </li>
+          </li> -->
+
+          <?php 
+          $menu = $this->db->get('tbl_menu')->result_array();
+          foreach ($menu as $data) {
+            ?>
+            <li class="nav-item">
+              <a href="<?= base_url('app/') ?><?= $data['url'] ?>" class="nav-link">
+                <i class="<?= $data['icon'] ?>"></i>
+                <p><?= $data['title'] ?></p>
+              </a>
+            </li>
+
+          <?php } ?>
 
 
           <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-tree"></i>
-              <p>
-               Keuangan
-               <i class="fas fa-angle-left right"></i>
-             </p>
-           </a>
-           <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="<?= base_url('app/pendapatan') ?>" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Pendapatan</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="<?= base_url('app/pengeluaran') ?>" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Pengeluaran</p>
-              </a>
-            </li>
-
-          </ul>
-        </li>
+            <a href="<?= base_url('login/keluar') ?>" class="nav-link">
+              <i class="<?= $data['icon'] ?>"></i>
+              <p>Keluar</p>
+            </a>
+          </li>
 
 
 
+      <!--     
+          <li class="nav-item">
+            <a href="<?= base_url('app/pengajuan_simpanan') ?>" class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <p>Anggota Simpanan Aktif</p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="<?= base_url('app/simpanan') ?>" class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <p>Data Simpanan</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="<?= base_url('app/pengajuan_pinjaman') ?>" class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <p>Pengajuan Pinjaman</p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="<?= base_url('app/pembayaran') ?>" class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <p>Pembayaran</p>
+            </a>
+          </li>
+
+        </ul>
+      </li>
 
 
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-edit"></i>
-            <p>
-              Simpan Pinjam
-              <i class="fas fa-angle-left right"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="<?= base_url('app/anggota_simpanpinjam') ?>" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Anggota Simpan Pinjam</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="<?= base_url('app/pengajuan_simpanan2') ?>" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Pengajuan Simpanan</p>
-              </a>
-            </li>
-
-            <li class="nav-item">
-              <a href="<?= base_url('app/pengajuan_simpanan') ?>" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Anggota Simpanan Aktif</p>
-              </a>
-            </li>
-
-            <li class="nav-item">
-              <a href="<?= base_url('app/simpanan') ?>" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Data Simpanan</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="<?= base_url('app/pengajuan_pinjaman') ?>" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Pengajuan Pinjaman</p>
-              </a>
-            </li>
-
-            <li class="nav-item">
-              <a href="<?= base_url('app/pembayaran') ?>" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Pembayaran</p>
-              </a>
-            </li>
-
-          </ul>
-        </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link">
+          <i class="nav-icon fas fa-edit"></i>
+          <p>
+            Toko Online
+            <i class="fas fa-angle-left right"></i>
+          </p>
+        </a>
+        <ul class="nav nav-treeview">
+          <li class="nav-item">
+            <a href="<?= base_url('app/produk') ?>" class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <p>Produk</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="<?= base_url('app/data_pembayaran_produk') ?>" class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <p>Orderan</p>
+            </a>
+          </li>
 
 
-        <li class="nav-item">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-edit"></i>
-            <p>
-              Toko Online
-              <i class="fas fa-angle-left right"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="<?= base_url('app/produk') ?>" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Produk</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="<?= base_url('app/data_pembayaran_produk') ?>" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Orderan</p>
-              </a>
-            </li>
 
-
-            
-          </ul>
-        </li>
+        </ul>
+      </li>
 
 
 
 
-        <li class="nav-item">
-          <a href="<?= base_url('app/unit') ?>" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Unit</p>
-          </a>
-        </li>
+      <li class="nav-item">
+        <a href="<?= base_url('app/unit') ?>" class="nav-link">
+          <i class="far fa-circle nav-icon"></i>
+          <p>Unit</p>
+        </a>
+      </li>
 
 
-        <li class="nav-item">
-          <a href="<?= base_url('app/jabatan') ?>" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Jabatan</p>
-          </a>
-        </li>
+      <li class="nav-item">
+        <a href="<?= base_url('app/jabatan') ?>" class="nav-link">
+          <i class="far fa-circle nav-icon"></i>
+          <p>Jabatan</p>
+        </a>
+      </li>
 
-        <li class="nav-item">
-          <a href="<?= base_url('app/user') ?>" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Pengguna</p>
-          </a>
-        </li>
+      <li class="nav-item">
+        <a href="<?= base_url('app/user') ?>" class="nav-link">
+          <i class="far fa-circle nav-icon"></i>
+          <p>Pengguna</p>
+        </a>
+      </li>
 
-        <li class="nav-item">
-          <a href="<?= base_url('app/level') ?>" class="nav-link">
-            <i class="far fa-circle nav-icon"></i>
-            <p>Level</p>
-          </a>
-        </li>
+      <li class="nav-item">
+        <a href="<?= base_url('app/level') ?>" class="nav-link">
+          <i class="far fa-circle nav-icon"></i>
+          <p>Level</p>
+        </a>
+      </li>
 
-
-        
-
+    -->
 
 
-      </ul>
-    </nav>
-    <!-- /.sidebar-menu -->
-  </div>
-  <!-- /.sidebar -->
+
+
+  </ul>
+</nav>
+<!-- /.sidebar-menu -->
+</div>
+<!-- /.sidebar -->
 </aside>

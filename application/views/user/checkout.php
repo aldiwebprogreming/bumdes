@@ -20,7 +20,7 @@
 
                         <p class="text-center">Selamat pembayaran anda berhasil di ajukan silahkan menunggu persetujuan pembayaran anda</p>
 
-                        <a href="<?= base_url('data_pesanan') ?>" style="text-decoration: none;">Lihat data pesanan anda</a>
+                        <a href="<?= base_url('user/data_pesanan') ?>" style="text-decoration: none;">Lihat data pesanan anda</a>
                     </center>
 
                 <?php }else{ ?>
@@ -54,13 +54,13 @@
 
 
                         <div class="form-floating mb-3">
-                           <input type="number" name="norek"  class="form-control"  data-sb-validations="required" />
-                           <label for="phone">Nomor Rekening Anda</label>
-                       </div>
+                         <input type="number" name="norek"  class="form-control"  data-sb-validations="required" />
+                         <label for="phone">Nomor Rekening Anda</label>
+                     </div>
 
 
 
-                       <div class="form-floating mb-3">
+                     <div class="form-floating mb-3">
                         <input type="file" name="gambar" va class="form-control"  data-sb-validations="required" />
                         <label for="phone">Bukti Pembayaran</label>
                         <small>Masukan bukti pembyaran anda dengan format JPG, JPEG, dan PNG</small>
